@@ -21,7 +21,7 @@ def detect_disease():
     img = preprocess_image(file)
     prediction = model.predict(img)
     predicted_class = np.argmax(prediction, axis=1)[0]
-    classes = list(train_generator.class_indices.keys())  # Replace with actual class names
+    classes = ['class1', 'class2', 'class3']  # Replace with actual class names
     return jsonify({"disease": classes[predicted_class]})
 
 if __name__ == '__main__':
