@@ -48,5 +48,5 @@ model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accur
 model.fit(train_generator, validation_data=val_generator, epochs=10)
 
 # Save the trained model
-model.save('backend/disease_detection_model.h5')
+model.save('backend/disease_detection_model.keras')
 print("Model saved successfully!")
