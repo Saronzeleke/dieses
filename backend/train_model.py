@@ -4,8 +4,8 @@ from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Conv2D, MaxPooling2D, Flatten, Dense
 
 # Define paths
-TRAIN_DIR = r'C:\Users\USER\Desktop\project\dataset\train'
-VAL_DIR = r'C:\Users\USER\Desktop\project\dataset\validation'
+TRAIN_DIR = r'C:\Users\USER\Desktop\DIESES\dataset\train'
+VAL_DIR = r'C:\Users\USER\Desktop\DIESES\dataset\validation'
 
 # Preprocess and augment data
 train_datagen = ImageDataGenerator(
