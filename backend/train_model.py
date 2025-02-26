@@ -5,7 +5,7 @@ from tensorflow.keras.callbacks import ModelCheckpoint # type: ignore
 import os
 
 
-train_dir = r"C:\Users\USER\Desktop\advacecrop\archive (1)\New Plant Diseases Dataset(Augmented)\New Plant Diseases Dataset(Augmented)\train"
+train_dir = r"C:\Users\USER\Desktop\dieses-1\reduced_dataset"
 
 
 train_datagen = ImageDataGenerator(
