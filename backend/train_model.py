@@ -1,12 +1,10 @@
-from tensorflow.keras.preprocessing.image import ImageDataGenerator # type: ignore
-from tensorflow.keras.models import Sequential # type: ignore
-from tensorflow.keras.layers import Conv2D, MaxPooling2D, Flatten, Dense, Dropout # type: ignore
-from tensorflow.keras.callbacks import ModelCheckpoint # type: ignore
+from tensorflow.keras.preprocessing.image import ImageDataGenerator  # type: ignore
+from tensorflow.keras.models import Sequential  # type: ignore
+from tensorflow.keras.layers import Conv2D, MaxPooling2D, Flatten, Dense, Dropout, Input  # type: ignore
+from tensorflow.keras.callbacks import ModelCheckpoint  # type: ignore
 import os
 
-
 train_dir = r"C:\Users\USER\Desktop\dieses-1\reduced_dataset"
-
 
 train_datagen = ImageDataGenerator(
     rescale=1.0/255.0,
@@ -17,16 +15,15 @@ train_datagen = ImageDataGenerator(
     zoom_range=0.2,
     horizontal_flip=True,
     fill_mode="nearest",
-    validation_split=0.2  
+    validation_split=0.2
 )
-
 
 train_generator = train_datagen.flow_from_directory(
     train_dir,
     target_size=(224, 224),
     batch_size=32,
     class_mode='categorical',
-    subset='training' 
+    subset='training'
 )
 
 validation_generator = train_datagen.flow_from_directory(
@@ -34,20 +31,20 @@ validation_generator = train_datagen.flow_from_directory(
     target_size=(224, 224),
     batch_size=32,
     class_mode='categorical',
-    subset='validation'  
+    subset='validation'
 )
 
 model = Sequential([
-    Conv2D(32, (3, 3), activation='relu', input_shape=(224, 224, 3)),
+    Input(shape=(224, 224, 3)),  # Optional: removes input_shape warning
+    Conv2D(32, (3, 3), activation='relu'),
     MaxPooling2D((2, 2)),
     Conv2D(64, (3, 3), activation='relu'),
     MaxPooling2D((2, 2)),
     Flatten(),
     Dense(128, activation='relu'),
     Dropout(0.5),
-    Dense(len(train_generator.class_indices), activation='softmax')  
+    Dense(len(train_generator.class_indices), activation='softmax')
 ])
-
 
 model.compile(
     optimizer='adam',
@@ -55,9 +52,7 @@ model.compile(
     metrics=['accuracy']
 )
 
-
-checkpoint = ModelCheckpoint("backend/crop_disease_detection_model.keras'", monitor="val_loss", save_best_only=True)
-
+checkpoint = ModelCheckpoint("backend/crop_disease_detection_model.keras", monitor="val_loss", save_best_only=True)
 
 model.fit(
     train_generator,
