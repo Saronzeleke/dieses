@@ -1,38 +1,343 @@
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
+.container {
+  display: flex;
+  flex-direction: column;
   min-height: 100vh;
+  min-width: 100vw;
+  background: var(--background);
+  color: var(--text);
+  transition: background 0.5s ease, color 0.5s ease;
+}
+
+.navbar {
+  display: flex;
+  justify-content: flex-start;
+  padding: 20px;
+  background: var(--cardBackground);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.content {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  flex: 1;
+  padding: 20px;
 }
 
-.App-link {
-  color: #61dafb;
+.title {
+  padding: 30px;
+  margin: 30px;
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  text-align: center;
+  color: var(--text);
+  animation: float 3s ease-in-out infinite;
 }
 
-@keyframes App-logo-spin {
-  from {
+@keyframes float {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.toggle-button {
+  padding: 10px 20px;
+  background: var(--buttonBackground);
+  color: #fff;
+  border: 1px ridge var(--buttonBackground);
+  border-radius: 5px;
+  cursor: pointer;
+  animation: pulse 2s infinite;
+}
+
+.toggle-button:hover {
+  background: var(--buttonHover);
+}
+
+.upload-container {
+  background: var(--cardBackground);
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  width: 100%;
+  max-width: 500px;
+}
+
+.file-input {
+  margin: 20px 0;
+  padding: 10px;
+  border: 2px dashed #3498db;
+  border-radius: 10px;
+  width: 100%;
+  cursor: pointer;
+}
+
+.file-input:hover {
+  border-color: #2980b9;
+}
+
+.button {
+  padding: 12px 24px;
+  background: var(--buttonBackground);
+  color: #fff;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background 0.3s ease;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.button:hover {
+  background: var(--buttonHover);
+}
+
+.button:disabled {
+  background: #bdc3c7;
+  cursor: not-allowed;
+  animation: none;
+}
+
+.remove-button {
+  padding: 8px 16px;
+  background: #e74c3c;
+  color: #fff;
+  border: 1px solid #c0392b;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+  animation: pulse 2s infinite;
+}
+.button,
+.toggle-button,
+.remove-button,
+.refresh-tip-button,
+.need-more-button,
+.reset-button,
+.share-button,
+.download-button,
+.feedback-container button {
+  padding: 10px 20px;
+  background: var(--buttonBackground);
+  color: #fff;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background 0.3s ease;
+  margin: 5px;
+}
+.button:hover,
+.toggle-button:hover,
+.remove-button:hover,
+.refresh-tip-button:hover,
+.need-more-button:hover,
+.reset-button:hover,
+.share-button:hover,
+.download-button:hover,
+.feedback-container button:hover {
+  background: var(--buttonHover);
+}
+.button:disabled {
+  background: #bdc3c7;
+  cursor: not-allowed;
+  animation: none; /* Disable animation when button is disabled */
+}
+.remove-button:hover {
+  background: #c0392b;
+}
+
+.feedback-container button {
+  padding: 8px 16px;
+  font-size: 0.9rem;
+}
+
+.share-button,
+.download-button {
+  background: #2ecc71; /* Green for positive actions */
+}
+
+.share-button:hover,
+.download-button:hover {
+  background: #27ae60;
+}
+
+@keyframes spin {
+  0% {
     transform: rotate(0deg);
   }
-  to {
+  100% {
     transform: rotate(360deg);
   }
+}
+
+.spinner {
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-left-color: #fff;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  animation: spin 1s linear infinite;
+}
+
+.result-container {
+  margin-top: 20px;
+  background: var(--cardBackground);
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  width: 100%;
+  max-width: 500px;
+}
+
+.result-title {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  color: var(--text);
+}
+
+.result-text {
+  margin: 5px 0;
+  font-size: 1.1rem;
+  color: var(--text);
+}
+
+.error-text {
+  color: #e74c3c;
+  margin-top: 20px;
+  font-size: 1rem;
+}
+/* Need More Button */
+.need-more-button {
+  padding: 10px 20px;
+  background: var(--buttonBackground);
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 20px 0;
+  transition: background 0.3s ease;
+}
+
+.need-more-button:hover {
+  background: var(--buttonHover);
+}
+
+/* How to Use Section */
+.how-to-use-section {
+  margin-top: 20px;
+  background: var(--cardBackground);
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  text-align: left;
+  width: 100%;
+  max-width: 500px;
+}
+
+.step {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.step-image {
+  width: 50px;
+  height: 50px;
+  margin-right: 15px;
+  border-radius: 10px;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.5s ease-in;
+}
+
+.how-to-use-section {
+  margin-top: 20px;
+  background: var(--cardBackground);
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  text-align: left;
+  width: 100%;
+  max-width: 500px;
+  opacity: 1;
+  transition: opacity 0.5s ease;
+}
+
+.how-to-use-section.fade-in {
+  opacity: 1;
+}
+
+.step {
+  margin-bottom: 15px;
+}
+
+.step {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.step-image {
+  width: 50px;
+  height: 50px;
+  margin-right: 15px;
+  border-radius: 10px;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+  display: none;
+}
+
+.how-to-use-section.slide-in + .overlay {
+  display: block;
+}
+
+.upload-count {
+  margin-top: 20px;
+  font-size: 1.1rem;
+  text-align: center;
+  color: var(--text);
+}
+
+.upload-count strong {
+  color: var(--buttonBackground);
 }
