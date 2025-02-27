@@ -3,8 +3,8 @@ import axios from "axios";
 import { Cropper } from "react-cropper";
 import "cropperjs/dist/cropper.css";
 import Confetti from "react-confetti";
-import "./App.css"; // Import the CSS file
-import { lightTheme, darkTheme } from "./Theme";
+import "./App.css"; 
+import { lightTheme, darkTheme } from "./Theme.js";
 
 const App = () => {
   const [file, setFile] = useState(null);
