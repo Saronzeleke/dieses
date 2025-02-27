@@ -1,5 +1,3 @@
-
-
 from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
 from flask_swagger_ui import get_swaggerui_blueprint
@@ -13,8 +11,7 @@ import os
 import logging
 
 app = Flask(__name__)
-CORS(app)  
-
+CORS(app)
 
 limiter = Limiter(
     app=app,
@@ -22,10 +19,8 @@ limiter = Limiter(
     default_limits=["200 per day", "50 per hour"]
 )
 
-
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
-
 
 DATABASE = os.getenv("DATABASE", "crop_disease.db")
 
@@ -53,9 +48,7 @@ swaggerui_blueprint = get_swaggerui_blueprint(
 )
 app.register_blueprint(swaggerui_blueprint, url_prefix=SWAGGER_URL)
 
-
-
-MODEL_PATH = os.getenv("MODEL_PATH", "backend/crop_disease_detection_model.keras")
+MODEL_PATH = os.getenv("MODEL_PATH", "crop_disease_detection_model.keras")  # Adjusted for backend folder
 try:
     model = tf.keras.models.load_model(MODEL_PATH)
     logger.info("Model loaded successfully")
@@ -85,7 +78,6 @@ def preprocess_image(image, target_size=(224, 224)):
     image = np.expand_dims(image, axis=0)
     return image
 
-
 def save_prediction(filename, disease, confidence):
     with sqlite3.connect(DATABASE) as conn:
         conn.execute(
@@ -96,7 +88,6 @@ def save_prediction(filename, disease, confidence):
             (filename, disease, confidence),
         )
         conn.commit()
-
 
 @app.route("/predict", methods=["POST"])
 @limiter.limit("10 per minute")
@@ -119,7 +110,6 @@ def predict():
         return jsonify({"error": "Model not available"}), 500
 
     try:
-
         image = Image.open(file.stream)
         processed_image = preprocess_image(image)
         logger.info(f"Processed image shape: {processed_image.shape}")
@@ -130,17 +120,14 @@ def predict():
         predicted_class = CLASS_LABELS[predicted_class_index]
         confidence = float(predictions[0][predicted_class_index])
 
-        
-        if confidence < 0.5:  
+        if confidence < 0.5:
             predicted_class = "Healthy"
             confidence = 1.0
 
         logger.info(f"Predicted class: {predicted_class}, Confidence: {confidence}")
 
-        
         save_prediction(file.filename, predicted_class, confidence)
 
-        
         return jsonify({
             "predicted_disease": predicted_class,
             "confidence": confidence,
@@ -150,7 +137,6 @@ def predict():
     except Exception as e:
         logger.error(f"Prediction failed: {e}")
         return jsonify({"error": f"Prediction failed: {str(e)}"}), 500
-
 
 @app.route("/feedback", methods=["POST"])
 def feedback():
@@ -181,14 +167,14 @@ def feedback():
         logger.error(f"Feedback submission failed: {e}")
         return jsonify({"error": str(e)}), 500
 
-
 @app.route("/static/swagger.json")
 def serve_swagger():
     return send_from_directory("static", "swagger.json")
 
-
 @app.route("/health", methods=["GET"])
 def health_check():
     return jsonify({"status": "healthy"})
+
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000)
+    port = int(os.getenv("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
