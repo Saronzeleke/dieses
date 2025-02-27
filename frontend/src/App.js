@@ -3,7 +3,7 @@ import axios from "axios";
 import { Cropper } from "react-cropper";
 import "cropperjs/dist/cropper.css";
 import Confetti from "react-confetti";
-import "./App.css"; import { lightTheme, darkTheme } from "./themes/Theme";
+import "./App.css"; import { lightTheme, darkTheme } from "./theme.js";
 const App = () => {
   const [file, setFile] = useState(null);
   const [preview, setPreview] = useState(null);
