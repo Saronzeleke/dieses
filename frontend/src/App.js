@@ -4,7 +4,7 @@ import { Cropper } from "react-cropper";
 import "cropperjs/dist/cropper.css";
 import Confetti from "react-confetti";
 import "./App.css"; 
-import { lightTheme, darkTheme } from "./Theme";
+import { lightTheme, darkTheme } from "./theme";
 const App = () => {
   const [file, setFile] = useState(null);
   const [preview, setPreview] = useState(null);
